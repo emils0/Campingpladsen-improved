@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="Campingpladsen.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <h2>Checkout form</h2>
     <div class="container-fluid">
-        <div class="col-xs-12">
+        <div class="col-xs-12 centered">
             <div class="row">
                 <div class="col-xs-6">
                     <label for="Fname">First name</label>
@@ -15,22 +16,22 @@
                 </div>
             </div>
             <label for="email">E-mail address</label>
-            <input type="text" class="form-control" id="email" />
+            <asp:TextBox type="text" class="form-control" ID="email" runat="server" />
             <label for="number">Phone number</label>
-            <input type="text" class="form-control" id="number" placeholder="+45" />
+            <asp:TextBox type="text" class="form-control" ID="number" placeholder="+45" runat="server" />
             <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" />
+            <asp:TextBox type="text" class="form-control" ID="address" runat="server" />
             <div class="row">
                 <div class="col-xs-6">
                     <label for="Sdate">Start date</label>
-                    <input type="date" class="form-control" id="Sdate" />
+                    <asp:TextBox type="date" class="form-control" ID="Sdate" runat="server" />
+                    &nbsp;
                 </div>
                 <div class="col-xs-6">
                     <label for="Edate">End date</label>
-                    <input type="date" class="form-control" id="Edate" />
+                    <asp:TextBox type="date" class="form-control" ID="Edate" runat="server" />
                 </div>
             </div>
-
         </div>
     </div>
 </asp:Content>
