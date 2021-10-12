@@ -25,11 +25,11 @@ namespace Campingpladsen
             SqlCommand customer = new SqlCommand("SP_Add_Customer", con);
 
             //Sets all parameters in a oneline (AddWithValue) instead of manual creating each parameter
-            customer.Parameters.AddWithValue("@FirstName", "Jacob");
-            customer.Parameters.AddWithValue("@LastName", "Nielsen");
-            customer.Parameters.AddWithValue("@PhoneNr", "77777777");
-            customer.Parameters.AddWithValue("@Address", "Ahorn Allé 5");
-            customer.Parameters.AddWithValue("@Email", );
+            customer.Parameters.AddWithValue("@FirstName", Fname.Text);
+            customer.Parameters.AddWithValue("@LastName", Lname.Text);
+            customer.Parameters.AddWithValue("@PhoneNr", number.Text);
+            customer.Parameters.AddWithValue("@Address", address.Text);
+            customer.Parameters.AddWithValue("@Email", email.Text);
 
             //Defines which SQL command to use
             SqlCommand cmd = new SqlCommand("SP_Add_Reservation", con);

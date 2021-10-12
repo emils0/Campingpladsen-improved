@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-xs-6">
                     <label for="Fname">First name</label>
-                    <input type="text" class="form-control" id="Fname" />
+                    <asp:TextBox type="text" class="form-control" ID="Fname" runat="server" />
                 </div>
                 <div class="col-xs-6">
                     <label for="Lname">Last name</label>
-                    <input type="text" class="form-control" id="Lname" />
+                    <asp:TextBox type="text" class="form-control" ID="Lname" runat="server" />
                 </div>
             </div>
             <label for="email">E-mail address</label>
