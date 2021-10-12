@@ -7,19 +7,78 @@ namespace Campingpladsen
 {
     public class OrderLines
     {
-        public int id { get; set; }
-        public int quantity { get; set; }
-        public string type { get; set; }
-        public int spotNr { get; set; }
-        public int price { get; set; }
+        private int id;
+        private int quantity;
+        private string type;
+        private int spotNr;
+        private int price;
 
         public OrderLines(int id, int quantity, string type, int spotNr, int price)
         {
-            this.id = id;
-            this.quantity = quantity;
-            this.type = type;
-            this.spotNr = spotNr;
-            this.price = price;
+            this.Id = id;
+            this.Quantity = quantity;
+            this.Type = type;
+            this.SpotNr = spotNr;
+            this.Price = price;
         }
+
+
+        #region Properties
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            private set
+            {
+                id = value;
+            }
+        }
+        public int Quantity
+        {
+            get
+            {
+                return quantity;
+            }
+            set
+            {
+                quantity = value;
+            }
+        }
+        public string Type
+        {
+            get
+            {
+                return type;
+            }
+            set
+            {
+                type = value;
+            }
+        }
+        public int SpotNr
+        {
+            get
+            {
+                return spotNr;
+            }
+            set
+            {
+                spotNr = value;
+            }
+        }
+        public int Price
+        {
+            get
+            {
+                return price;
+            }
+            private set
+            {
+                price = value;
+            }
+        }
+        #endregion
     }
 }

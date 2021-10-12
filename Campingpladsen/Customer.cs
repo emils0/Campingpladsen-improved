@@ -7,19 +7,93 @@ namespace Campingpladsen
 {
     public class Customer
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string telephone { get; set; }
-        public string email { get; set; }
-        public string address { get; set; }
+        private int id;
+        private string fName;
+        private string lName;
+        private string telephone;
+        private string email;
+        private string address;
 
-        public Customer(int id, string name, string telephone, string email, string address)
+        public Customer(int id, string fName, string lName, string telephone, string email, string address)
         {
             this.id = id;
-            this.name = name;
+            this.fName = fName;
+            this.lName = lName;
             this.telephone = telephone;
             this.email = email;
             this.address = address;
         }
+
+        #region Properties
+
+        public int Id
+        {
+            get 
+            { 
+                return id; 
+            }
+            private set 
+            { 
+                id = value; 
+            }
+        }
+
+        public string FName
+        {
+            get
+            {
+                return fName;
+            }
+            set
+            {
+                fName = value;
+            }
+        }
+
+        public string LName
+        {
+            get
+            {
+                return lName;
+            }
+            set
+            {
+                lName = value;
+            }
+        }
+        public string Telephone
+        {
+            get
+            {
+                return telephone;
+            }
+            set
+            {
+                telephone = value;
+            }
+        }
+        public string Email
+        {
+            get
+            {
+                return email;
+            }
+            set
+            {
+                email = value;
+            }
+        }
+        public string Address
+        {
+            get
+            {
+                return address;
+            }
+            set
+            {
+                address = value;
+            }
+        }
+        #endregion
     }
 }
