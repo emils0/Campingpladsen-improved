@@ -4,7 +4,7 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
     <h2>Checkout form</h2>
     <div class="container-fluid">
-        <div class="col-xs-12 centered"
+        <div class="col-xs-12 centered">
             <div class="row">
                 <div class="col-xs-6">
                     <label for="Fname">First name</label>
@@ -32,7 +32,7 @@
                     <asp:TextBox type="date" class="form-control" ID="Edate" runat="server" />
                 </div>
             </div>
-            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Confirm_Reservation" />>
+            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Confirm_Reservation" />
         </div>
     </div>
 </asp:Content>
