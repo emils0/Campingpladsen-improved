@@ -32,7 +32,7 @@
                     <asp:TextBox type="date" class="form-control" ID="Edate" runat="server" />
                 </div>
             </div>
-            <asp:Button ID="Button1" runat="server" Text="Button" />>
+            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Confirm_Reservation" />>
         </div>
     </div>
 </asp:Content>

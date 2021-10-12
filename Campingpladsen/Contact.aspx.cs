@@ -19,38 +19,46 @@ namespace Campingpladsen
         protected void Confirm_Reservation(object sender, EventArgs e)
         {
             //Create SqlConnection with connection string
-            SqlConnection con = new SqlConnection("Server=localhost;Database=CAMP_DB;User Id=sa;Password=Kode1234!;");
+            SqlConnectionStringBuilder conBuild = new SqlConnectionStringBuilder("Data Source = 172.16.57.36,1433; Network Library=DBMSSOCN; Initial Catalog = camping; Persist Security Info=True; User ID=jaco7702; Password=Kode1234!");
+            SqlConnection con = new SqlConnection(conBuild.ConnectionString);
 
             //Defines which SQL command to use
-            SqlCommand customer = new SqlCommand("SP_Add_Customer", con);
+            //SqlCommand customer = new SqlCommand("SP_Add_Customer", con);
 
+            con.Open();
             //Sets all parameters in a oneline (AddWithValue) instead of manual creating each parameter
-            customer.Parameters.AddWithValue("@FirstName", Fname.Text);
-            customer.Parameters.AddWithValue("@LastName", Lname.Text);
-            customer.Parameters.AddWithValue("@PhoneNr", number.Text);
-            customer.Parameters.AddWithValue("@Address", address.Text);
-            customer.Parameters.AddWithValue("@Email", email.Text);
+            //customer.Parameters.AddWithValue("@FirstName", Fname.Text);
+            //customer.Parameters.AddWithValue("@LastName", Lname.Text);
+            //customer.Parameters.AddWithValue("@PhoneNr", number.Text);
+            //customer.Parameters.AddWithValue("@Address", address.Text);
+            //customer.Parameters.AddWithValue("@Email", email.Text);
+            
+            //customer.CommandType = System.Data.CommandType.StoredProcedure;
+
+            //customer.ExecuteNonQuery();
 
             //Defines which SQL command to use
             SqlCommand cmd = new SqlCommand("SP_Add_Reservation", con);
 
             //Sets all parameters in a oneline (AddWithValue) instead of manual creating each parameter
-            cmd.Parameters.AddWithValue("@SDATE", txtName.Text);
-            cmd.Parameters.AddWithValue("@EDATE", txtSurName.Text);
-            cmd.Parameters.AddWithValue("@TotalP", txtCity.Text);
-            cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
-            //Adding the OUTPUT variable
-            cmd.Parameters.Add("@ReturnID", System.Data.SqlDbType.Int);
-            cmd.Parameters["@ReturnID"].Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("@SDATE", Sdate.Text);
+            cmd.Parameters.AddWithValue("@EDATE", Edate.Text);
+            cmd.Parameters.AddWithValue("@TotalPrice", 100);
+            cmd.Parameters.AddWithValue("@CustomerId", 3);
+
+
             //Defines which type of SQL to use.
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            con.Open();
             //Executing a NON Query since it's an INSERT query
             cmd.ExecuteNonQuery();
-            //Setting a label equals the OUTPUT parameter
-            lblReturn.Text = "Kunden oprettet med ID: " + Convert.ToString(cmd.Parameters["@ReturnID"].Value);
+
             //Binds the data to a gridview
             con.Close();
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+
         }
     }
 }
