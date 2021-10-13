@@ -13,28 +13,30 @@ namespace Campingpladsen
         private string telephone;
         private string email;
         private string address;
+        List<Reservation> reservations = new List<Reservation> { };
 
-        public Customer(int id, string fName, string lName, string telephone, string email, string address)
+        public Customer(string fName, string lName, string telephone, string email, string address, int id = -1)
         {
-            this.id = id;
-            this.fName = fName;
-            this.lName = lName;
-            this.telephone = telephone;
-            this.email = email;
-            this.address = address;
+            if (id < 0) { }
+            else { this.id = id; }  
+            this.FName = fName;
+            this.LName = lName;
+            this.Telephone = telephone;
+            this.Email = email;
+            this.Address = address;
         }
 
         #region Properties
 
         public int Id
         {
-            get 
-            { 
-                return id; 
+            get
+            {
+                return id;
             }
-            private set 
-            { 
-                id = value; 
+            private set
+            {
+                id = value;
             }
         }
 

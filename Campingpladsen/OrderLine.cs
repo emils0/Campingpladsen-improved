@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Campingpladsen
 {
-    public class OrderLines
+    public class OrderLine
     {
         private int id;
         private int quantity;
@@ -13,9 +13,10 @@ namespace Campingpladsen
         private int spotNr;
         private int price;
 
-        public OrderLines(int id, int quantity, string type, int spotNr, int price)
+        public OrderLine(int quantity, string type, int spotNr, int price, int id = - 1)
         {
-            this.Id = id;
+            if (id < 0) { }
+            else { this.id = id; }
             this.Quantity = quantity;
             this.Type = type;
             this.SpotNr = spotNr;

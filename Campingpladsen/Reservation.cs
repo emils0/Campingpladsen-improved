@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using NodaTime;
 
 namespace Campingpladsen
 {
@@ -10,21 +9,30 @@ namespace Campingpladsen
     {
         private int id;
         private int customerId;
-        private LocalDate sDate;
-        private LocalDate eDate;
+        private DateTime sDate;
+        private DateTime eDate;
         private int totalPrice;
         private bool arrived;
         private bool departed;
+        List<OrderLine> orderLines = new List<OrderLine> { };
 
-        public Reservation(int id, int customerId, LocalDate sDate, LocalDate eDate, int totalPrice, bool arrived, bool departed)
+        public Reservation(int customerId, DateTime sDate, DateTime eDate, int totalPrice, bool arrived, bool departed, int id = -1)
         {
-            this.id = id;
+            if (id < 0) { }
+            else { this.id = id; }
             this.customerId = customerId;
             this.sDate = sDate;
             this.eDate = eDate;
             this.totalPrice = totalPrice;
             this.arrived = arrived;
             this.departed = departed;
+        }
+
+        // Creates orderline and adds it to reservation
+        public void AppendOrderLine(int quantity, string type, int spotNr, int id)
+        {
+            OrderLine order = new OrderLine(quantity, type, spotNr, id);
+            orderLines.Add(order);
         }
 
         #region Properties
@@ -50,7 +58,7 @@ namespace Campingpladsen
                 customerId = value;
             }
         }
-        public LocalDate SDate
+        public DateTime SDate
         {
             get
             {
@@ -61,7 +69,7 @@ namespace Campingpladsen
                 sDate = value;
             }
         }
-        public LocalDate EDate
+        public DateTime EDate
         {
             get
             {

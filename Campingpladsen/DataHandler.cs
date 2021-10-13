@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -7,6 +8,7 @@ using System.Data.SqlClient;
 
 namespace Campingpladsen
 {
+    
     public class DataHandler
     {
         // Information for the server for easy access
@@ -41,26 +43,26 @@ namespace Campingpladsen
         }
         #endregion
 
-        // Stores a customer to the database
+        // Stores a customer to the database and returns Customer ID
         #region Store Customer
-        public bool StoreCustomer(Customer booking)
+        public int StoreCustomer(Customer user)
         {
             // Establish a new SQL server connection refenrece
             SqlConnection con = SqlCon();
 
             // We declare the name of the command. This case a stored procedure
-            SqlCommand cmd = new SqlCommand("SP_Add_Reservation", con);
+            SqlCommand cmd = new SqlCommand("SP_Add_Customer", con);
 
             // Send the Customer details as parameters for the procedure
-            cmd.Parameters.AddWithValue("@FirstName", booking.FName);
-            cmd.Parameters.AddWithValue("@LastName", booking.LName);
-            cmd.Parameters.AddWithValue("@PhoneNr", booking.Telephone);
-            cmd.Parameters.AddWithValue("@Address", booking.Address);
-            cmd.Parameters.AddWithValue("@Email", booking.Email);
+            cmd.Parameters.AddWithValue("@FirstName", user.FName);
+            cmd.Parameters.AddWithValue("@LastName", user.LName);
+            cmd.Parameters.AddWithValue("@PhoneNr", user.Telephone);
+            cmd.Parameters.AddWithValue("@Address", user.Address);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
 
             // Defines a return parameter 
-            //cmd.Parameters.Add("@ReturnID", System.Data.SqlDbType.Bit);
-            //cmd.Parameters["@ReturnID"].Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.Add("@ReturnID", System.Data.SqlDbType.Int);
+            cmd.Parameters["@ReturnID"].Direction = System.Data.ParameterDirection.Output;
 
             // Defines that the command is an stored procedure
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -74,21 +76,13 @@ namespace Campingpladsen
             // When we are done we close the the connection
             con.Close();
 
-            //if (cmd.Parameters["@ReturnID"].Value == 1)
-            //{
-            //    return true;
-            //}
-            //else (cmd.Parameters["@ReturnID"].Value == 0) {
-            //    return false;
-            //}
-
-            return true;
+            return Convert.ToInt32(cmd.Parameters["@ReturnID"].Value);
         }
         #endregion
 
-        // Stores a reservation to the database
+        // Stores a reservation to the database and returns Reservation ID
         #region Store Reservation
-        public bool StoreReservation(Reservation booking)
+        public int StoreReservation(Reservation booking)
         {
             // Establish a new SQL server connection refenrece
             SqlConnection con = SqlCon();
@@ -97,15 +91,15 @@ namespace Campingpladsen
             SqlCommand cmd = new SqlCommand("SP_Add_Reservation", con);
 
             // Send the Reservation details as parameters for the procedure
-            cmd.Parameters.AddWithValue("@SDATE", booking.SDate);
-            cmd.Parameters.AddWithValue("@EDATE", booking.EDate);
+            cmd.Parameters.AddWithValue("@SDATE", booking.SDate.ToString("yyyy-MM-dd HH:mm:ss"));
+            cmd.Parameters.AddWithValue("@EDATE", booking.EDate.ToString("yyyy-MM-dd HH:mm:ss"));
             cmd.Parameters.AddWithValue("@TotalPrice", booking.TotalPrice);
             cmd.Parameters.AddWithValue("@CustomerId", booking.CustomerId);
 
 
             // Defines a return parameter 
-            //cmd.Parameters.Add("@ReturnID", System.Data.SqlDbType.Bit);
-            //cmd.Parameters["@ReturnID"].Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.Add("@ReturnID", System.Data.SqlDbType.Int);
+            cmd.Parameters["@ReturnID"].Direction = System.Data.ParameterDirection.Output;
 
             // Defines that the command is an stored procedure
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -119,15 +113,7 @@ namespace Campingpladsen
             // When we are done we close the the connection
             con.Close();
 
-            //if (cmd.Parameters["@ReturnID"].Value == 1)
-            //{
-            //    return true;
-            //}
-            //else (cmd.Parameters["@ReturnID"].Value == 0) {
-            //    return false;
-            //}
-
-            return true;
+            return Convert.ToInt32(cmd.Parameters["@ReturnID"].Value);
         }
         #endregion
 
@@ -194,6 +180,79 @@ namespace Campingpladsen
 
             return true;
         }
+        #endregion
+
+        // returns a data in which spots are available in specific period
+        #region Available Spots
+        public SqlDataReader AvailableSpots(DateTime sDate, DateTime eDate, string spotType)
+        {
+            // Establish a new SQL server connection refenrece
+            SqlConnection con = SqlCon();
+
+            // We declare the name of the command. This case a stored procedure
+            SqlCommand cmd = new SqlCommand("SP_Available_Spots", con);
+
+            // Send the details as parameters for the procedure
+            cmd.Parameters.AddWithValue("@AskSDate", sDate.ToString("yyyy-MM-dd HH:mm:ss"));
+            cmd.Parameters.AddWithValue("@AskEDate", eDate.ToString("yyyy-MM-dd HH:mm:ss"));
+            cmd.Parameters.AddWithValue("@SpotType", spotType);
+
+            // Defines that the command is an stored procedure
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            // We open the connection to the SQL server
+            con.Open();
+
+            // We execute the procedure
+            SqlDataReader loadedData = cmd.ExecuteReader();
+
+            // When we are done we close the the connection
+            con.Close();
+
+            // Returns the SQL data to logic to parse into C# dataTypes
+            return loadedData;
+        }
+
+        #endregion
+
+        // Checks if the customer exist and returns the ID
+        // Returns -1 if no customer exists
+        #region Customer exist check
+        public int CustomerExist(string email)
+        {
+            // Establish a new SQL server connection refenrece
+            SqlConnection con = SqlCon();
+
+            // We declare the name of the command. This case a stored procedure
+            SqlCommand cmd = new SqlCommand("SP_Customer_Exist", con);
+
+            // Send the Customer ID as parameters for the procedure
+            cmd.Parameters.AddWithValue("@emailCheck", email);
+
+            // Defines a return parameter 
+            cmd.Parameters.Add("@Return_ID", System.Data.SqlDbType.Bit);
+            cmd.Parameters["@ReturnID_ID"].Direction = System.Data.ParameterDirection.Output;
+
+            // Defines that the command is an stored procedure
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            // We open the connection to the SQL server
+            con.Open();
+
+            // We execute the procedure
+            cmd.ExecuteNonQuery();
+
+            // When we are done we close the the connection
+            con.Close();
+
+            //Converts the INT from SQL to a usable INT in C#
+            // The procedure returns -1 if it does not find an existing customer
+            int id = Convert.ToInt32(cmd.Parameters["@Return_ID"].Value);
+
+            // returns
+            return id;
+        }
+
         #endregion
     }
 }

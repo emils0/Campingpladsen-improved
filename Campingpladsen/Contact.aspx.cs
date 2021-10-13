@@ -11,6 +11,7 @@ namespace Campingpladsen
 {
     public partial class Contact : Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -18,7 +19,8 @@ namespace Campingpladsen
 
         protected void Confirm_Reservation(object sender, EventArgs e)
         {
-
+            string[] ny = new string[5];
+                ny[0] = Sdate.Text;
         }
 
 
