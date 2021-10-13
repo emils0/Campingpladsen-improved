@@ -56,7 +56,7 @@ namespace Campingpladsen
             con.Close();
         }
 
-        protected void Button1_Click1(object sender, EventArgs e)
+        protected void confirm_Click1(object sender, EventArgs e)
         {
 
         }
