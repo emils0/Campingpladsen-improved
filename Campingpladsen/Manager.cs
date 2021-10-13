@@ -12,10 +12,15 @@ namespace Campingpladsen
     public class Manager
     {
 
+        DataHandler dataHandler = new DataHandler();
+        CampingFunctions campFunction = new CampingFunctions();
+
+
         #region Confirm Reservation
         public bool ConfirmReservation(string[] customerdetails, string[] reservationDetails)
         {
 
+            return true;
         }
         #endregion
 
@@ -23,6 +28,8 @@ namespace Campingpladsen
         public Reservation ShowReservation(int reservationId)
         {
 
+
+            return null;
         }
         #endregion
 
@@ -30,6 +37,8 @@ namespace Campingpladsen
         public List<Reservation> LoadReservations(int reservationId)
         {
 
+
+            return null;
         }
         #endregion
 
@@ -37,6 +46,7 @@ namespace Campingpladsen
         public List<string> CleaningToday()
         {
 
+            return null;
         }
         #endregion
 
@@ -44,6 +54,7 @@ namespace Campingpladsen
         public List<Customer> ShowAllCustomers()
         {
 
+            return null;
         }
         #endregion
 
@@ -51,6 +62,7 @@ namespace Campingpladsen
         public List<string> CheckOutToday()
         {
 
+            return null;
         }
         #endregion
 
@@ -58,6 +70,7 @@ namespace Campingpladsen
         public List<string> CheckInToday()
         {
 
+            return null;
         }
         #endregion
 
@@ -65,6 +78,7 @@ namespace Campingpladsen
         public bool MarkReservation(int reservationId, bool checkIn = false, bool checkOut = false)
         {
 
+            return true;
         }
         #endregion
 
@@ -72,13 +86,15 @@ namespace Campingpladsen
         public string[] AvailableSpots()
         {
 
+            return null;
         }
         #endregion
 
         #region Delete reservation
-        public bool DeleteReservation(int reservationId) 
+        public bool DeleteReservation(int reservationId)
         {
 
+            return true;
         }
         #endregion
     }

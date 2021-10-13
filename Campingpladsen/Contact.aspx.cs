@@ -18,43 +18,14 @@ namespace Campingpladsen
 
         protected void Confirm_Reservation(object sender, EventArgs e)
         {
-            //Create SqlConnection with connection string
-            SqlConnectionStringBuilder conBuild = new SqlConnectionStringBuilder("Data Source = 172.16.57.36,1433; Network Library=DBMSSOCN; Initial Catalog = camping; Persist Security Info=True; User ID=jaco7702; Password=Kode1234!");
-            SqlConnection con = new SqlConnection(conBuild.ConnectionString);
 
-            //SqlCommand customer = new SqlCommand("SP_Add_Customer", con);
-
-            //con.Open();
-            //customer.Parameters.AddWithValue("@FirstName", Fname.Text);
-            //customer.Parameters.AddWithValue("@LastName", Lname.Text);
-            //customer.Parameters.AddWithValue("@PhoneNr", number.Text);
-            //customer.Parameters.AddWithValue("@Address", address.Text);
-            //customer.Parameters.AddWithValue("@Email", email.Text);
-            
-            //customer.CommandType = System.Data.CommandType.StoredProcedure;
-
-            //customer.ExecuteNonQuery();
-
-            //SqlCommand cmd = new SqlCommand("SP_Add_Reservation", con);
-
-            //cmd.Parameters.AddWithValue("@SDATE", Sdate.Text);
-            //cmd.Parameters.AddWithValue("@EDATE", Edate.Text);
-            //cmd.Parameters.AddWithValue("@TotalPrice", 100);
-            //cmd.Parameters.AddWithValue("@CustomerId", 3);
-
-
-            //Defines which type of SQL to use.
-            //cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-            //Executing a NON Query since it's an INSERT query
-            //cmd.ExecuteNonQuery();
-
-            //con.Close();
         }
+
 
         protected void confirm_Click1(object sender, EventArgs e)
         {
 
         }
+
     }
 }
