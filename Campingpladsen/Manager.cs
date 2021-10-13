@@ -18,15 +18,22 @@ namespace Campingpladsen
         // Creates a customer if they dont exists then create one or uses the existing customerId if they do
         // Creates an reservation and stores it in the sql
         #region Confirm Reservation
-        public bool ConfirmReservation(string fName, string lName, string phoneNr, string email, string address, string sDate, string eDate, string[,] orderDetails)
+        public bool ConfirmReservation(string fName, string lName, string phoneNr, string email, string address, string sDate, string eDate, string[,] orderDetails, string[,] additionalOrders)
         {
             int customerID = dataHandler.CustomerExist(email);
-            if (customerID < 0) {
+            if (customerID < 0)
+            {
                 Customer user = campFunction.CreateCustomer(fName, lName, phoneNr, email, address);
                 customerID = dataHandler.StoreCustomer(user);
             }
+
             Reservation booking = campFunction.CreateReservation(customerID, sDate, eDate, 0);
-            int reservationID = dataHandler.StoreReservation(booking);  
+
+            booking.AppendOrderLine(orderDetails, additionalOrders);
+
+            booking.TotalPrice = campFunction.PriceCalculator(booking, dataHandler.GetPriceList());
+
+            int reservationID = dataHandler.StoreReservation(booking);
 
             return true;
         }

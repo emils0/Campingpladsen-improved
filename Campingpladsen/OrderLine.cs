@@ -13,14 +13,13 @@ namespace Campingpladsen
         private int spotNr;
         private int price;
 
-        public OrderLine(int quantity, string type, int spotNr, int price, int id = - 1)
+        public OrderLine(int quantity, string type, int spotNr, int id = - 1)
         {
             if (id < 0) { }
             else { this.id = id; }
             this.Quantity = quantity;
             this.Type = type;
             this.SpotNr = spotNr;
-            this.Price = price;
         }
 
 
@@ -75,7 +74,7 @@ namespace Campingpladsen
             {
                 return price;
             }
-            private set
+            set
             {
                 price = value;
             }

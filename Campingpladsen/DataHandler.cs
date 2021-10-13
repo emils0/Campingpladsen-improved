@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace Campingpladsen
 {
-    
+
     public class DataHandler
     {
         // Information for the server for easy access
@@ -110,10 +110,26 @@ namespace Campingpladsen
             // We execute the procedure
             cmd.ExecuteNonQuery();
 
+            // Storing reservationId for reference on orderlines
+            int reservationId = Convert.ToInt32(cmd.Parameters["@ReturnID"].Value);
+
+            // Adding Orderlines to SQL 
+            foreach (OrderLine order in booking.OrderLines)
+            {
+                SqlCommand addOrder = new SqlCommand("SP_Add_OrderLine", con);
+
+                addOrder.Parameters.AddWithValue("@Quantity", order.Quantity);
+                addOrder.Parameters.AddWithValue("@Type", order.Type);
+                addOrder.Parameters.AddWithValue("@ReservationId", reservationId);
+                addOrder.Parameters.AddWithValue("@SpotNr", order.SpotNr);
+
+                addOrder.ExecuteNonQuery();
+            }
+
             // When we are done we close the the connection
             con.Close();
 
-            return Convert.ToInt32(cmd.Parameters["@ReturnID"].Value);
+            return reservationId;
         }
         #endregion
 
@@ -156,7 +172,7 @@ namespace Campingpladsen
                 // If guest are arriving
                 cmd = new SqlCommand("SP_Arrived", con);
             }
-            else if (checkOut == true &&  checkIn == false)
+            else if (checkOut == true && checkIn == false)
             {
                 // if guest are departing
                 cmd = new SqlCommand("SP_Arrived", con);
@@ -252,6 +268,31 @@ namespace Campingpladsen
             // returns
             return id;
         }
+
+        #endregion
+
+        // Loads the pricelist from the sql
+        #region Get SQL price list
+        public SqlDataReader GetPriceList()
+        {
+            // Establish a new SQL server connection refenrece
+            SqlConnection con = SqlCon();
+
+            // We declare the name of the command. This case a stored procedure
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.PriceList", con);
+
+            // We open the connection to the SQL server
+            con.Open();
+
+            // We execute the procedure and stores it
+            SqlDataReader loadedData = cmd.ExecuteReader();
+
+            // When we are done we close the the connection
+            con.Close();
+
+            return loadedData;
+        }
+
 
         #endregion
     }
