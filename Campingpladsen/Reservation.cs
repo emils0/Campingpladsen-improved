@@ -33,10 +33,9 @@ namespace Campingpladsen
         {
             for (int i = 0; i < orderDetails.GetLength(0); i++)
             {
-                int quantity = this.eDate.Date.Day - this.sDate.Date.Day;
+                int quantity = Convert.ToInt32(orderDetails[i, 0]) * (this.eDate.Date.Day - this.sDate.Date.Day);
                 string type = orderDetails[i, 1];
                 int spotNr = Convert.ToInt32(orderDetails[i, 2]);
-                int price = Convert.ToInt32(orderDetails[i, 3]);
                 OrderLine order = new OrderLine(quantity, type, spotNr);
                 this.orderLines.Add(order);
             }
@@ -45,7 +44,6 @@ namespace Campingpladsen
                 int quantity = Convert.ToInt32(additionalOrders[i, 0]);
                 string type = additionalOrders[i, 1];
                 int spotNr = Convert.ToInt32(additionalOrders[i, 2]);
-                int price = Convert.ToInt32(additionalOrders[i, 3]);
                 OrderLine order = new OrderLine(quantity, type, spotNr);
                 this.orderLines.Add(order);
             }

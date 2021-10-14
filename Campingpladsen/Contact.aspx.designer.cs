@@ -78,31 +78,67 @@ namespace Campingpladsen
         protected global::System.Web.UI.WebControls.TextBox Edate;
 
         /// <summary>
-        /// people control.
+        /// Voksen control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox people;
+        protected global::System.Web.UI.WebControls.TextBox Voksen;
 
         /// <summary>
-        /// children control.
+        /// BadelandVoksen control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox children;
+        protected global::System.Web.UI.WebControls.TextBox BadelandVoksen;
 
         /// <summary>
-        /// dogs control.
+        /// Barn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dogs;
+        protected global::System.Web.UI.WebControls.TextBox Barn;
+
+        /// <summary>
+        /// BadelandBarn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox BadelandBarn;
+
+        /// <summary>
+        /// Hund control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Hund;
+
+        /// <summary>
+        /// Bikes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Bikes;
+
+        /// <summary>
+        /// spotType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList spotType;
 
         /// <summary>
         /// availableSpots control.
@@ -121,6 +157,15 @@ namespace Campingpladsen
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cleaning;
+
+        /// <summary>
+        /// Bedlinen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox Bedlinen;
 
         /// <summary>
         /// confirm control.

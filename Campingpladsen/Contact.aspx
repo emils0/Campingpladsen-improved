@@ -28,6 +28,7 @@
             <label for="address">Address</label>
             <asp:TextBox type="text" class="form-control" ID="address" runat="server" />
         </div>
+        <%--Dates--%>
         <div class="row">
             <div class="col-xs-6 form-group">
                 <label for="Sdate">Start date</label>
@@ -39,29 +40,63 @@
                 <asp:TextBox type="date" class="form-control" ID="Edate" runat="server" />
             </div>
         </div>
+        <%--Adults--%>
         <div class="row">
             <div class="col-xs-6 form-group">
-                <label for="people">Amount of residents</label>
-                <asp:TextBox type="number" class="form-control" ID="people" runat="server" />
+                <label for="Voksen">Adults</label>
+                <asp:TextBox type="number" class="form-control" ID="Voksen" runat="server" value="0" />
             </div>
             <div class="col-xs-6 form-group">
-                <label for="children">Children</label>
-                <asp:TextBox type="number" class="form-control" ID="children" runat="server" />
+                <label for="BadelandVoksen">Pool tickets: Adult (per day per person)</label>
+                <asp:TextBox type="number" class="form-control" ID="BadelandVoksen" runat="server" value="0" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="dogs">Dogs</label>
-            <asp:TextBox type="number" class="form-control" ID="dogs" runat="server" />
+        <%--Kids--%>
+        <div class="row">
+            <div class="col-xs-6 form-group">
+                <label for="Barn">Children</label>
+                <asp:TextBox type="number" class="form-control" ID="Barn" runat="server" value="0" />
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="BadelandBarn">Pool tickets: Child (per day per person)</label>
+                <asp:TextBox type="number" class="form-control" ID="BadelandBarn" runat="server" value="0" />
+            </div>
         </div>
+        <%--Dogs--%>
         <div class="row">
             <div class="form-group col-xs-6">
-                <label for="availableSpots">Spot</label>
+                <label for="Hund">Dogs</label>
+                <asp:TextBox type="number" class="form-control" ID="Hund" runat="server" value="0" />
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="Bikes">Bike rental (per person per day)</label>
+                <asp:TextBox type="number" class="form-control" ID="Bikes" runat="server" value="0" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3">
+                <label for="spotType">Spot type</label>
+                <asp:DropDownList ID="spotType" runat="server" AutoPostBack="True" OnSelectedIndexChanged="spotType_SelectedIndexChanged">
+                    <asp:ListItem Value="#">Please Select</asp:ListItem>
+                    <asp:ListItem Value="Stor plads">Stor plads </asp:ListItem>
+                    <asp:ListItem Value="Lille plads">Lille plads</asp:ListItem>
+                    <asp:ListItem Value="Hytte">Hytte</asp:ListItem>
+                    <asp:ListItem Value="Luksus hytte">Luksus hytte</asp:ListItem>
+                    <asp:ListItem Value="Telt plads">Teltplads</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="availableSpots">Spot NR</label>
                 <asp:DropDownList ID="availableSpots" runat="server">
                 </asp:DropDownList>
             </div>
             <div classs="col-xs-6 form-group">
-                <label for="cleaning">Cleaning</label>
-                <asp:CheckBox ID="cleaning" runat="server" />
+                <label for="cleaning">Endcleaning (only for huts)</label>
+                <asp:CheckBox ID="cleaning" runat="server"/>
+            </div>
+            <div classs="col-xs-6 form-group">
+                <label for="Bedlinen">Bedlinen rental</label>
+                <asp:CheckBox ID="Bedlinen" runat="server" />
             </div>
         </div>
         <div class="row">

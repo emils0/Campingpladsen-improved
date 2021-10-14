@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Campingpladsen
 {
@@ -33,8 +34,8 @@ namespace Campingpladsen
         #region Create New Reservation
         public Reservation CreateReservation(int customerId, string sDate, string eDate, int totalPrice, int id = -1)
         {
-            DateTime startDate = DateTime.Parse(sDate + " 13:00:00");
-            DateTime endDate = DateTime.Parse(eDate + " 11:00:00");
+            DateTime startDate = DateTime.Parse(String.Concat(sDate + " 13:00:00"));
+            DateTime endDate = DateTime.Parse(String.Concat(eDate + " 11:00:00"));
 
             Reservation booking = new Reservation(customerId, startDate, endDate, totalPrice, false, false);
 
@@ -47,7 +48,7 @@ namespace Campingpladsen
         private bool isMainSeason(DateTime sDate, DateTime eDate)
         {
             DateTime mainSeasonStart = new DateTime(sDate.Year, 6, 14);
-            DateTime mainSeasonEnd = new DateTime(eDate.Year, 8, 15);
+            DateTime mainSeasonEnd = new DateTime(sDate.Year, 8, 15);
 
             return sDate.Date > mainSeasonStart & sDate.Date < mainSeasonEnd || eDate.Date > mainSeasonStart & eDate.Date < mainSeasonEnd;
         }
@@ -55,33 +56,33 @@ namespace Campingpladsen
 
         // Finds price of Orderlines based on season
         #region Find price
-        public int FindPrice(string type, SqlDataReader priceList, bool isMain)
+        public int FindPrice(string type, List<ItemPrice> priceTester, bool isMain)
         {
-            int priceChange = 0;;
+            int priceChange = 0; ;
 
-            SqlDataReader priceTester = priceList;
-            while (priceTester.Read())
+            foreach (ItemPrice item in priceTester)
             {
-                if (type == priceTester["Type"].ToString())
+                if (type == item.Type)
                 {
                     if (isMain)
                     {
-                        priceChange = Convert.ToInt32(priceTester["MainSeason"]);
+                        priceChange = item.MainPrice;
                     }
                     else
                     {
-                        priceChange = Convert.ToInt32(priceTester["OffSeason"]);
+                        priceChange = item.OffPrice;
 
                     }
                 }
             }
+
             return priceChange;
         }
         #endregion
 
         // Calulates the total price of a reservation
         #region Total Price calculator
-        public int PriceCalculator(Reservation booking, SqlDataReader priceList)
+        public int PriceCalculator(Reservation booking, List<ItemPrice> priceList)
         {
             int totalPrice = 0;
             //TimeSpan stay = eDate.Date - sDate.Date;
@@ -98,15 +99,6 @@ namespace Campingpladsen
         #endregion
 
 
-
-        // Finds spots available in the given period
-        #region Available Spots (unused)
-        public string[] AvaiableSpots()
-        {
-
-            return null;
-        }
-        #endregion
 
         // Finds days which are within 
         #region Days in main season (Unused)

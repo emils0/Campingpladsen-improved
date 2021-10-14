@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Campingpladsen
 {
@@ -118,6 +120,11 @@ namespace Campingpladsen
             {
                 SqlCommand addOrder = new SqlCommand("SP_Add_OrderLine", con);
 
+                addOrder.CommandType = System.Data.CommandType.StoredProcedure;
+
+                addOrder.Parameters.Add("@ReturnID", System.Data.SqlDbType.Int);
+                addOrder.Parameters["@ReturnID"].Direction = System.Data.ParameterDirection.Output;
+
                 addOrder.Parameters.AddWithValue("@Quantity", order.Quantity);
                 addOrder.Parameters.AddWithValue("@Type", order.Type);
                 addOrder.Parameters.AddWithValue("@ReservationId", reservationId);
@@ -200,13 +207,13 @@ namespace Campingpladsen
 
         // returns a data in which spots are available in specific period
         #region Available Spots
-        public SqlDataReader AvailableSpots(DateTime sDate, DateTime eDate, string spotType)
+        public List<int> AvailableSpots(DateTime sDate, DateTime eDate, string spotType)
         {
             // Establish a new SQL server connection refenrece
             SqlConnection con = SqlCon();
 
             // We declare the name of the command. This case a stored procedure
-            SqlCommand cmd = new SqlCommand("SP_Available_Spots", con);
+            SqlCommand cmd = new SqlCommand("SP_Available_Spot", con);
 
             // Send the details as parameters for the procedure
             cmd.Parameters.AddWithValue("@AskSDate", sDate.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -221,12 +228,20 @@ namespace Campingpladsen
 
             // We execute the procedure
             SqlDataReader loadedData = cmd.ExecuteReader();
+            
+
+            List<int> spots = new List<int> { };
+
+            while (loadedData.Read())
+            {
+                spots.Add(Convert.ToInt32(loadedData["SpotNr"]));
+            }
 
             // When we are done we close the the connection
             con.Close();
 
             // Returns the SQL data to logic to parse into C# dataTypes
-            return loadedData;
+            return spots;
         }
 
         #endregion
@@ -246,8 +261,8 @@ namespace Campingpladsen
             cmd.Parameters.AddWithValue("@emailCheck", email);
 
             // Defines a return parameter 
-            cmd.Parameters.Add("@Return_ID", System.Data.SqlDbType.Bit);
-            cmd.Parameters["@ReturnID_ID"].Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.Add("@Return_ID", System.Data.SqlDbType.Int);
+            cmd.Parameters["@Return_ID"].Direction = System.Data.ParameterDirection.Output;
 
             // Defines that the command is an stored procedure
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -273,13 +288,12 @@ namespace Campingpladsen
 
         // Loads the pricelist from the sql
         #region Get SQL price list
-        public SqlDataReader GetPriceList()
+        public List<ItemPrice> GetPriceList()
         {
             // Establish a new SQL server connection refenrece
             SqlConnection con = SqlCon();
 
-            // We declare the name of the command. This case a stored procedure
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.PriceList", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PriceList", con);
 
             // We open the connection to the SQL server
             con.Open();
@@ -287,10 +301,24 @@ namespace Campingpladsen
             // We execute the procedure and stores it
             SqlDataReader loadedData = cmd.ExecuteReader();
 
+            List<ItemPrice> priceList = new List<ItemPrice> { };
+
+            while (loadedData.Read())
+            {
+                ItemPrice item = new ItemPrice();
+
+                item.PriceId = Convert.ToInt32(loadedData["PriceId"]);
+                item.Type = loadedData["Type"].ToString();
+                item.OffPrice = Convert.ToInt32(loadedData["OffSeason"]);
+                item.MainPrice = Convert.ToInt32(loadedData["MainSeason"]);
+
+                priceList.Add(item);
+            }
+
             // When we are done we close the the connection
             con.Close();
 
-            return loadedData;
+            return priceList;
         }
 
 
