@@ -42,7 +42,6 @@ namespace Campingpladsen
         }
         #endregion
 
-
         // Checks if reservation is in the main season 
         #region is Main Season
         private bool isMainSeason(DateTime sDate, DateTime eDate)
@@ -97,6 +96,8 @@ namespace Campingpladsen
             return totalPrice;
         }
         #endregion
+
+
 
         // Finds spots available in the given period
         #region Available Spots (unused)

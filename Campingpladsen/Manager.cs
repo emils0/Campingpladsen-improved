@@ -20,19 +20,25 @@ namespace Campingpladsen
         #region Confirm Reservation
         public bool ConfirmReservation(string fName, string lName, string phoneNr, string email, string address, string sDate, string eDate, string[,] orderDetails, string[,] additionalOrders)
         {
+            // Checks if customer exists, if not creates a new one
             int customerID = dataHandler.CustomerExist(email);
+
             if (customerID < 0)
             {
                 Customer user = campFunction.CreateCustomer(fName, lName, phoneNr, email, address);
                 customerID = dataHandler.StoreCustomer(user);
             }
 
+            // Creates an reservation with the information total price to be calculated later
             Reservation booking = campFunction.CreateReservation(customerID, sDate, eDate, 0);
-
+            
+            // Creates orderlines for the reservation and links them to the reservation object
             booking.AppendOrderLine(orderDetails, additionalOrders);
 
+            // Calculates the total reservation price and price of each orderline
             booking.TotalPrice = campFunction.PriceCalculator(booking, dataHandler.GetPriceList());
 
+            // Sends reservation to DataHandler to store reservation and orderlines in SQL tables 
             int reservationID = dataHandler.StoreReservation(booking);
 
             return true;
@@ -89,23 +95,34 @@ namespace Campingpladsen
         }
         #endregion
 
+        // Marks a reservation with arrived or departed, when the customer checks in or checks out
         #region Mark Reservation
-        public bool MarkReservation(int reservationId, bool checkIn = false, bool checkOut = false)
+        public bool MarkReservation(string reservationId, bool checkIn = false, bool checkOut = false)
         {
-
-            return true;
+            return dataHandler.MarkReservation(reservationId, checkIn, checkOut);
         }
         #endregion
 
+        // Returns a list of spots available in the given period
         #region Available Spots
-        public string[] AvailableSpots()
+        public List<int> AvailableSpots(DateTime sDate, DateTime eDate, string spotType)
         {
+            List<int> spots = new List<int> { };
 
-            return null;
+            // Gets the spots available in the time period and type
+            SqlDataReader spotsAvailable = dataHandler.AvailableSpots(sDate, eDate, spotType);
+
+            while (spotsAvailable.Read())
+            {
+                spots.Add(Convert.ToInt32(spotsAvailable["SpotNr"]));
+            }
+
+            // Returns lists if spots
+            return spots;
         }
         #endregion
 
-        #region Delete reservation
+        #region Delete reservation (unsused)
         public bool DeleteReservation(int reservationId)
         {
 

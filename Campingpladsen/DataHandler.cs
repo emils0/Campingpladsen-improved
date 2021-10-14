@@ -158,7 +158,7 @@ namespace Campingpladsen
 
         // Marks a reservation to either be checked in or out
         #region Mark reservation arrived/departed
-        public bool MarkReservation(string reservaionId, bool checkIn = false, bool checkOut = false)
+        public bool MarkReservation(string reservationId, bool checkIn, bool checkOut)
         {
             // defines conncetion reference to the SQL Server
             SqlConnection con = SqlCon();
@@ -183,7 +183,7 @@ namespace Campingpladsen
             }
 
             // Values for the procedure
-            cmd.Parameters.AddWithValue("@ReservationId", reservaionId);
+            cmd.Parameters.AddWithValue("@ReservationId", reservationId);
 
             // Open the SQL connection
             con.Open();
