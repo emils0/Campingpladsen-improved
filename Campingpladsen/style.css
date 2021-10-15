@@ -1,6 +1,6 @@
 ﻿.centered {
     float: none;
-    margin: 0 auto;
+    max-width: 85;
 }
 
 .smol {
@@ -8,4 +8,25 @@
     padding: 0 90px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     line-height: 1.5;
+}
+
+.right {
+    margin-top: 65px;
+    max-width: 60%;
+    float: right;
+}
+
+.left {
+    max-width: 40%;
+    float: left;
+}
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.very-smol {
+    max-width: 300px;
 }
