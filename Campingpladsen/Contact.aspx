@@ -32,7 +32,6 @@
             <div class="col-xs-6 form-group">
                 <label for="Sdate">Start date</label>
                 <asp:TextBox type="date" class="form-control" ID="Sdate" runat="server" />
-                &nbsp;
             </div>
             <div class="col-xs-6 form-group">
                 <label for="Edate">End date</label>

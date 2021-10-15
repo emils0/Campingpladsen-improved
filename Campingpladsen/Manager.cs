@@ -48,7 +48,7 @@ namespace Campingpladsen
         #region ShowReservation
         public Reservation ShowReservation(int reservationId)
         {
-
+            
 
             return null;
         }
@@ -74,7 +74,7 @@ namespace Campingpladsen
         #region Show All customers
         public List<Customer> ShowAllCustomers()
         {
-
+            
             return null;
         }
         #endregion
