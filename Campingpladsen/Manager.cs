@@ -23,7 +23,7 @@ namespace Campingpladsen
             // Checks if customer exists, if not creates a new one
             int customerID = dataHandler.CustomerExist(email);
 
-            if (customerID < 0)
+            if (customerID == 0)
             {
                 Customer user = campFunction.CreateCustomer(fName, lName, phoneNr, email, address);
                 customerID = dataHandler.StoreCustomer(user);
@@ -105,17 +105,17 @@ namespace Campingpladsen
 
         // Returns a list of spots available in the given period
         #region Available Spots
-        public List<int> AvailableSpots(DateTime sDate, DateTime eDate, string spotType)
+        public List<int> AvailableSpots(string startDate, string endDate, string spotType)
         {
-            List<int> spots = new List<int> { };
+
+            DateTime sDate = DateTime.Parse(startDate);
+            DateTime eDate = DateTime.Parse(endDate);
+
 
             // Gets the spots available in the time period and type
-            SqlDataReader spotsAvailable = dataHandler.AvailableSpots(sDate, eDate, spotType);
+            List<int> spots = dataHandler.AvailableSpots(sDate, eDate, spotType);
 
-            while (spotsAvailable.Read())
-            {
-                spots.Add(Convert.ToInt32(spotsAvailable["SpotNr"]));
-            }
+            
 
             // Returns lists if spots
             return spots;
